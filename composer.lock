@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e722681cbc0799568dbb82a1312e2e6f",
+    "content-hash": "45fd8f00d5055fd8717ded596b0c5268",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -170,58 +170,6 @@
                 }
             ],
             "time": "2020-07-07T16:41:12+00:00"
-        },
-        {
-            "name": "react-parallel/runtime",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reactphp-parallel/runtime.git",
-                "reference": "5c8ece636cf2cc3187f570c9db02a93d0a858ce3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reactphp-parallel/runtime/zipball/5c8ece636cf2cc3187f570c9db02a93d0a858ce3",
-                "reference": "5c8ece636cf2cc3187f570c9db02a93d0a858ce3",
-                "shasum": ""
-            },
-            "require": {
-                "ext-parallel": "*",
-                "php": "^7.4",
-                "react-parallel/event-loop": "^1.0",
-                "react/event-loop": "^1.1",
-                "react/promise": "^2.7",
-                "wyrihaximus/constants": "^1.4.3"
-            },
-            "require-dev": {
-                "wyrihaximus/async-test-utilities": "^2.2",
-                "wyrihaximus/ticking-promise": "^1.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "ReactParallel\\Runtime\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cees-Jan Kiewiet",
-                    "email": "ceesjank@gmail.com",
-                    "homepage": "http://wyrihaximus.net/"
-                }
-            ],
-            "description": "💨 Convinence wrapper around ext-parallel Runtime for and ReactPHP",
-            "funding": [
-                {
-                    "url": "https://github.com/WyriHaximus",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-07-06T11:17:51+00:00"
         },
         {
             "name": "react/event-loop",
@@ -729,53 +677,6 @@
             ],
             "description": "Interface for pool info metrics",
             "time": "2019-09-27T06:28:08+00:00"
-        },
-        {
-            "name": "wyrihaximus/ticking-promise",
-            "version": "1.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/WyriHaximus/TickingPromise.git",
-                "reference": "4bb99024402bb7526de8880f3dab0c1f0858def5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/TickingPromise/zipball/4bb99024402bb7526de8880f3dab0c1f0858def5",
-                "reference": "4bb99024402bb7526de8880f3dab0c1f0858def5",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0 || ^5.4",
-                "react/event-loop": "^1.0 || ^0.5 || ^0.4",
-                "react/promise": "~2.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.4",
-                "squizlabs/php_codesniffer": "^1.5.6",
-                "vectorface/dunit": "~1.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "WyriHaximus\\React\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cees-Jan Kiewiet",
-                    "email": "ceesjank@gmail.com",
-                    "homepage": "http://wyrihaximus.net/"
-                }
-            ],
-            "description": "Wrapping ticks into a promise",
-            "time": "2018-04-05T12:36:50+00:00"
         }
     ],
     "packages-dev": [
@@ -4883,6 +4784,58 @@
             "time": "2020-07-06T18:06:58+00:00"
         },
         {
+            "name": "react-parallel/runtime",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp-parallel/runtime.git",
+                "reference": "5c8ece636cf2cc3187f570c9db02a93d0a858ce3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp-parallel/runtime/zipball/5c8ece636cf2cc3187f570c9db02a93d0a858ce3",
+                "reference": "5c8ece636cf2cc3187f570c9db02a93d0a858ce3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-parallel": "*",
+                "php": "^7.4",
+                "react-parallel/event-loop": "^1.0",
+                "react/event-loop": "^1.1",
+                "react/promise": "^2.7",
+                "wyrihaximus/constants": "^1.4.3"
+            },
+            "require-dev": {
+                "wyrihaximus/async-test-utilities": "^2.2",
+                "wyrihaximus/ticking-promise": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ReactParallel\\Runtime\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com",
+                    "homepage": "http://wyrihaximus.net/"
+                }
+            ],
+            "description": "💨 Convinence wrapper around ext-parallel Runtime for and ReactPHP",
+            "funding": [
+                {
+                    "url": "https://github.com/WyriHaximus",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-07-06T11:17:51+00:00"
+        },
+        {
             "name": "react/promise-timer",
             "version": "v1.6.0",
             "source": {
@@ -7769,6 +7722,53 @@
                 }
             ],
             "time": "2020-06-23T17:04:48+00:00"
+        },
+        {
+            "name": "wyrihaximus/ticking-promise",
+            "version": "1.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WyriHaximus/TickingPromise.git",
+                "reference": "4bb99024402bb7526de8880f3dab0c1f0858def5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WyriHaximus/TickingPromise/zipball/4bb99024402bb7526de8880f3dab0c1f0858def5",
+                "reference": "4bb99024402bb7526de8880f3dab0c1f0858def5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^5.4",
+                "react/event-loop": "^1.0 || ^0.5 || ^0.4",
+                "react/promise": "~2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.4",
+                "squizlabs/php_codesniffer": "^1.5.6",
+                "vectorface/dunit": "~1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WyriHaximus\\React\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com",
+                    "homepage": "http://wyrihaximus.net/"
+                }
+            ],
+            "description": "Wrapping ticks into a promise",
+            "time": "2018-04-05T12:36:50+00:00"
         }
     ],
     "aliases": [],
