@@ -22,7 +22,7 @@ else
 		"wyrihaximusnet/php:7.4-zts-alpine3.12-dev"
 endif
 
-all: lint cs-fix cs stan unit infection composer-require-checker composer-unused
+all: lint cs-fix cs stan composer-require-checker composer-unused unit infection
 
 lint:
 	$(DOCKER_RUN) vendor/bin/parallel-lint --exclude vendor .
