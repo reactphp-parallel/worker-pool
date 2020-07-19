@@ -13,7 +13,7 @@ use ReactParallel\Pool\Worker\Worker;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrownWork;
-use ReactParallel\Pool\Worker\Workers\Work;
+use ReactParallel\Pool\Worker\Workers\WorkObject;
 use ReflectionClass;
 use Throwable;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
@@ -54,7 +54,7 @@ final class WorkerTest extends AsyncTestCase
             ], iterator_to_array($pool->info()));
         });
 
-        $money = $this->await($pool->perform(new Work(Money::EUR(512)))->always(static function () use ($pool): void {
+        $money = $this->await($pool->perform(new WorkObject(Money::EUR(512)))->always(static function () use ($pool): void {
             $pool->close();
         }), $loop);
         assert($money instanceof Money);
@@ -102,7 +102,7 @@ final class WorkerTest extends AsyncTestCase
 
         $money = null;
         try {
-            $this->await($pool->perform(new Work(Money::EUR(512)))->always(static function () use ($pool): void {
+            $this->await($pool->perform(new WorkObject(Money::EUR(512)))->always(static function () use ($pool): void {
                 $pool->close();
             }), $loop);
         } catch (ThrownWork $thrownWork) {

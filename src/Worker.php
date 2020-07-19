@@ -13,6 +13,7 @@ use ReactParallel\Contracts\GroupInterface;
 use ReactParallel\Contracts\LowLevelPoolInterface;
 use ReactParallel\EventLoop\EventLoopBridge;
 use ReactParallel\Factory;
+use ReactParallel\Pool\Worker\Work\Work;
 use ReactParallel\Pool\Worker\Work\WorkerFactory;
 use WyriHaximus\PoolInfo\Info;
 use WyriHaximus\PoolInfo\PoolInfoInterface;
@@ -29,13 +30,18 @@ use const WyriHaximus\Constants\Boolean\FALSE_;
 use const WyriHaximus\Constants\Boolean\TRUE_;
 use const WyriHaximus\Constants\Numeric\ZERO;
 
+/**
+ * @template TWork of Work
+ * @template TWorkerFactory of WorkerFactory
+ */
 final class Worker implements PoolInfoInterface
 {
     public const MINIMUM_TTL = 0.1;
     private LoopInterface $loop;
     private EventLoopBridge $eventLoopBridge;
     private LowLevelPoolInterface $pool;
-    private WorkerFactory $worker;
+    /** @var TWorkerFactory  */
+    private WorkerFactory $workerFactory;
     private float $ttl;
     private GroupInterface $group;
 
@@ -50,16 +56,22 @@ final class Worker implements PoolInfoInterface
 
     private bool $closed = FALSE_;
 
+    /**
+     * @param TWorkerFactory $worker
+     */
     public function __construct(Factory $factory, WorkerFactory $worker, float $ttl)
     {
         $this->loop            = $factory->loop();
         $this->eventLoopBridge = $factory->eventLoopBridge();
         $this->pool            = $factory->lowLevelPool();
-        $this->worker          = $worker;
+        $this->workerFactory   = $worker;
         $this->ttl             = $ttl;
         $this->group           = $this->pool->acquireGroup();
     }
 
+    /**
+     * @param TWork $work
+     */
     public function perform(Work $work): PromiseInterface
     {
         if ($this->closed === TRUE_) {
@@ -150,7 +162,7 @@ final class Worker implements PoolInfoInterface
 
     private function spawnRuntime(): Thread
     {
-        $thread                                  = Thread::create($this->worker, $this->eventLoopBridge, $this->pool);
+        $thread                                  = Thread::create($this->workerFactory, $this->eventLoopBridge, $this->pool);
         $this->threads[spl_object_hash($thread)] = $thread;
 
         return $thread;

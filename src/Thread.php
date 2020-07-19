@@ -14,6 +14,7 @@ use ReactParallel\Pool\Worker\Message\Outcome;
 use ReactParallel\Pool\Worker\Message\PositiveOutcome;
 use ReactParallel\Pool\Worker\Message\Work as WorkMessage;
 use ReactParallel\Pool\Worker\Thread\Performer;
+use ReactParallel\Pool\Worker\Work\Work;
 use ReactParallel\Pool\Worker\Work\WorkerFactory;
 
 use function count;

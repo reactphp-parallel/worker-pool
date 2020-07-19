@@ -1,4 +1,5 @@
 parameters:
+	checkGenericClassInNonGenericObjectType: false
 	ignoreErrors:
 		- '#Call to an undefined method React\\Promise\\PromiseInterface::always\(\).#'
 		- '#Call to an undefined method React\\Promise\\PromiseInterface::done\(\).#'

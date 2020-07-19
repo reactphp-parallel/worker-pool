@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace ReactParallel\Pool\Worker\Workers;
 
-use ReactParallel\Pool\Worker\Work as WorkContract;
-use ReactParallel\Pool\Worker\Work\Worker as WorkerInterface;
+use ReactParallel\Pool\Worker\Work\Work;
+use ReactParallel\Pool\Worker\Work\Worker;
 
-final class ThrowingReturnWorker implements WorkerInterface
+/**
+ * @implements Worker<WorkObject>
+ */
+final class ThrowingReturnWorker implements Worker
 {
-    public function perform(WorkContract $work): Result
+    public function perform(Work $work): Result
     {
         throw new ThrownWork($work);
     }

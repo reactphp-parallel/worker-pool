@@ -7,7 +7,7 @@ namespace ReactParallel\Tests\Pool\Worker\Workers;
 use Money\Money;
 use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrownWork;
-use ReactParallel\Pool\Worker\Workers\Work;
+use ReactParallel\Pool\Worker\Workers\WorkObject;
 use Throwable;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
@@ -21,7 +21,7 @@ final class ThrowingReturnTest extends AsyncTestCase
         $money      = null;
         $thrownWork = null;
         try {
-            (new ThrowingReturnWorkerFactory())->construct()->perform(new Work(Money::EUR(512)));
+            (new ThrowingReturnWorkerFactory())->construct()->perform(new WorkObject(Money::EUR(512)));
         } catch (ThrownWork $thrownWork) {
             $money = $thrownWork->work();
         } catch (Throwable $throwable) {

@@ -26,6 +26,7 @@ final class Performer
                 while ($work = $in->recv()) {
                     assert($work instanceof WorkMessage);
                     try {
+                        /** @psalm-suppress UndefinedDocblockClass */
                         $out->send(new ResultMessage($work->id(), $worker->perform($work->work())));
                     } catch (Throwable $throwable) {
                         $out->send(new ErrorMessage($work->id(), new Error($throwable)));

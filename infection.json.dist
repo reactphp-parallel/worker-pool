@@ -12,7 +12,7 @@
         "@default": true,
         "FunctionCallRemoval": {
             "ignore": [
-                "ReactParallel\\Pool\\Worker\\Worker::perform::76"
+                "ReactParallel\\Pool\\Worker\\Worker::perform::88"
             ]
         },
         "GreaterThan": {
@@ -27,25 +27,37 @@
         },
         "Identical": {
             "ignore": [
-                "ReactParallel\\Pool\\Worker\\Thread::__construct::43",
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::44",
                 "ReactParallel\\Pool\\Worker\\Thread::close::85",
-                "ReactParallel\\Pool\\Worker\\Worker::getIdleThread::137"
+                "ReactParallel\\Pool\\Worker\\Worker::getIdleThread::149"
             ]
         },
         "MethodCallRemoval": {
             "ignore": [
-                "ReactParallel\\Pool\\Worker\\Infinite::startTtlTimer::189",
-                "ReactParallel\\Pool\\Worker\\Thread::__construct::44",
-                "ReactParallel\\Pool\\Worker\\Thread::close::89",
-                "ReactParallel\\Pool\\Worker\\Worker::perform::87",
-                "ReactParallel\\Pool\\Worker\\Worker::kill::111",
-                "ReactParallel\\Pool\\Worker\\Worker::getIdleThread::138",
-                "ReactParallel\\Pool\\Worker\\Worker::startTtlTimer::164"
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::40",
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::45",
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::49",
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::55",
+                "ReactParallel\\Pool\\Worker\\Thread::perform::77",
+                "ReactParallel\\Pool\\Worker\\Thread::close::84",
+                "ReactParallel\\Pool\\Worker\\Thread::close::90",
+                "ReactParallel\\Pool\\Worker\\Thread\\Performer::create::30",
+                "ReactParallel\\Pool\\Worker\\Thread\\Performer::create::32",
+                "ReactParallel\\Pool\\Worker\\Worker::perform::99",
+                "ReactParallel\\Pool\\Worker\\Worker::kill::123",
+                "ReactParallel\\Pool\\Worker\\Worker::getIdleThread::150",
+                "ReactParallel\\Pool\\Worker\\Worker::startTtlTimer::176"
             ]
         },
         "NotIdentical": {
             "ignore": [
-                "ReactParallel\\Pool\\Worker\\Thread::close::85"
+                "ReactParallel\\Pool\\Worker\\Thread::close::86"
+            ]
+        },
+        "PublicVisibility": {
+            "ignore": [
+                "ReactParallel\\Pool\\Worker\\Worker::close::82",
+                "ReactParallel\\Pool\\Worker\\Worker::perform::77"
             ]
         }
     }

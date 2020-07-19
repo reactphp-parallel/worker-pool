@@ -11,7 +11,7 @@ use ReactParallel\Pool\Worker\Message\Work as WorkMessage;
 use ReactParallel\Pool\Worker\Thread\Performer;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
-use ReactParallel\Pool\Worker\Workers\Work;
+use ReactParallel\Pool\Worker\Workers\WorkObject;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
 use function dirname;
@@ -31,7 +31,7 @@ final class PerformerTest extends AsyncTestCase
 
         $runtime->run(static function (Channel $in): void {
             sleep(1);
-            $in->send(new WorkMessage('abc', new Work(Money::EUR(512))));
+            $in->send(new WorkMessage('abc', new WorkObject(Money::EUR(512))));
             sleep(1);
             $in->close();
         }, [$in]);
@@ -56,7 +56,7 @@ final class PerformerTest extends AsyncTestCase
 
         $runtime->run(static function (Channel $in): void {
             sleep(1);
-            $in->send(new WorkMessage('abc', new Work(Money::EUR(512))));
+            $in->send(new WorkMessage('abc', new WorkObject(Money::EUR(512))));
             sleep(1);
             $in->close();
         }, [$in]);

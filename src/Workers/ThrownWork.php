@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ReactParallel\Pool\Worker\Workers;
 
 use Exception;
-use ReactParallel\Pool\Worker\Work;
+use ReactParallel\Pool\Worker\Work\Work;
 use WyriHaximus\AdditionalPropertiesInterface;
 
 final class ThrownWork extends Exception implements AdditionalPropertiesInterface
