@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ReactParallel\Tests\Pool\Worker\Workers;
 
 use Money\Money;
-use ReactParallel\Pool\Worker\Work;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
+use ReactParallel\Pool\Worker\Workers\Work;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
 final class ReturnTest extends AsyncTestCase

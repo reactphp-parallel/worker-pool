@@ -9,9 +9,9 @@ use parallel\Channel;
 use parallel\Runtime;
 use ReactParallel\Pool\Worker\Message\Work as WorkMessage;
 use ReactParallel\Pool\Worker\Thread\Performer;
-use ReactParallel\Pool\Worker\Work;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
+use ReactParallel\Pool\Worker\Workers\Work;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
 use function dirname;

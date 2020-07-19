@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace ReactParallel\Tests\Pool\Worker\Workers;
 
 use Money\Money;
-use ReactParallel\Pool\Worker\Work;
 use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrownWork;
+use ReactParallel\Pool\Worker\Workers\Work;
 use Throwable;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
