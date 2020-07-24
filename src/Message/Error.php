@@ -9,12 +9,12 @@ use ReactParallel\Pool\Worker\Error as UnitOfError;
 final class Error implements NegativeOutcome
 {
     private string $id;
-    private UnitOfError $error;
+    private string $error;
 
     public function __construct(string $id, UnitOfError $error)
     {
         $this->id    = $id;
-        $this->error = $error;
+        $this->error = serialize($error);
     }
 
     public function id(): string
@@ -24,6 +24,6 @@ final class Error implements NegativeOutcome
 
     public function error(): UnitOfError
     {
-        return $this->error;
+        return unserialize($this->error);
     }
 }

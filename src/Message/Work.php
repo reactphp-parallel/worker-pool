@@ -10,12 +10,12 @@ use ReactParallel\Pool\Worker\Work as UnitOfWork;
 final class Work implements Message
 {
     private string $id;
-    private UnitOfWork $work;
+    private string $work;
 
     public function __construct(string $id, UnitOfWork $work)
     {
         $this->id   = $id;
-        $this->work = $work;
+        $this->work = serialize($work);
     }
 
     public function id(): string
@@ -25,6 +25,6 @@ final class Work implements Message
 
     public function work(): UnitOfWork
     {
-        return $this->work;
+        return unserialize($this->work);
     }
 }

@@ -9,12 +9,12 @@ use ReactParallel\Pool\Worker\Result as UnitOfResult;
 final class Result implements PositiveOutcome
 {
     private string $id;
-    private UnitOfResult $result;
+    private string $result;
 
     public function __construct(string $id, UnitOfResult $result)
     {
         $this->id     = $id;
-        $this->result = $result;
+        $this->result = serialize($result);
     }
 
     public function id(): string
@@ -24,6 +24,6 @@ final class Result implements PositiveOutcome
 
     public function result(): UnitOfResult
     {
-        return $this->result;
+        return unserialize($this->result);
     }
 }
