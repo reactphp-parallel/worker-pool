@@ -7,6 +7,9 @@ namespace ReactParallel\Pool\Worker\Message;
 use ReactParallel\Pool\Worker\Message;
 use ReactParallel\Pool\Worker\Work as UnitOfWork;
 
+use function serialize;
+use function unserialize;
+
 final class Work implements Message
 {
     private string $id;
