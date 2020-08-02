@@ -6,6 +6,9 @@ namespace ReactParallel\Pool\Worker\Message;
 
 use ReactParallel\Pool\Worker\Error as UnitOfError;
 
+use function serialize;
+use function unserialize;
+
 final class Error implements NegativeOutcome
 {
     private string $id;

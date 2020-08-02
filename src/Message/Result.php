@@ -6,6 +6,9 @@ namespace ReactParallel\Pool\Worker\Message;
 
 use ReactParallel\Pool\Worker\Result as UnitOfResult;
 
+use function serialize;
+use function unserialize;
+
 final class Result implements PositiveOutcome
 {
     private string $id;
