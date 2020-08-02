@@ -12,6 +12,7 @@ use ReactParallel\Contracts\ClosedException;
 use ReactParallel\Contracts\GroupInterface;
 use ReactParallel\Contracts\LowLevelPoolInterface;
 use ReactParallel\EventLoop\EventLoopBridge;
+use ReactParallel\Factory;
 use ReactParallel\Pool\Worker\Work\WorkerFactory;
 use WyriHaximus\PoolInfo\Info;
 use WyriHaximus\PoolInfo\PoolInfoInterface;
@@ -49,11 +50,11 @@ final class Worker implements PoolInfoInterface
 
     private bool $closed = FALSE_;
 
-    public function __construct(LoopInterface $loop, EventLoopBridge $eventLoopBridge, LowLevelPoolInterface $pool, WorkerFactory $worker, float $ttl)
+    public function __construct(Factory $factory, WorkerFactory $worker, float $ttl)
     {
-        $this->loop            = $loop;
-        $this->eventLoopBridge = $eventLoopBridge;
-        $this->pool            = $pool;
+        $this->loop            = $factory->loop();
+        $this->eventLoopBridge = $factory->eventLoopBridge();
+        $this->pool            = $factory->lowLevelPool();
         $this->worker          = $worker;
         $this->ttl             = $ttl;
         $this->group           = $this->pool->acquireGroup();

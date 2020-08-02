@@ -7,14 +7,14 @@ namespace ReactParallel\Tests\Pool\Worker;
 use Money\Money;
 use React\EventLoop\Factory;
 use ReactParallel\Contracts\LowLevelPoolInterface;
-use ReactParallel\EventLoop\EventLoopBridge;
+use ReactParallel\Factory as ParallelFactory;
 use ReactParallel\Pool\Infinite\Group;
-use ReactParallel\Pool\Infinite\Infinite;
 use ReactParallel\Pool\Worker\Worker;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrownWork;
 use ReactParallel\Pool\Worker\Workers\Work;
+use ReflectionClass;
 use Throwable;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\PoolInfo\Info;
@@ -30,11 +30,11 @@ final class WorkerTest extends AsyncTestCase
     public function return(): void
     {
         $loop            = Factory::create();
-        $eventLoopBridge = new EventLoopBridge($loop);
+        $parallelFactory = new ParallelFactory($loop);
 
         $workerFactory = new ReturnWorkerFactory();
 
-        $pool = new Worker($loop, $eventLoopBridge, new Infinite($loop, $eventLoopBridge, 1), $workerFactory, 1);
+        $pool = new Worker($parallelFactory, $workerFactory, 1);
 
         self::assertSame([
             Info::TOTAL => 0,
@@ -76,11 +76,11 @@ final class WorkerTest extends AsyncTestCase
     public function thrown(): void
     {
         $loop            = Factory::create();
-        $eventLoopBridge = new EventLoopBridge($loop);
+        $parallelFactory = new ParallelFactory($loop);
 
         $workerFactory = new ThrowingReturnWorkerFactory();
 
-        $pool = new Worker($loop, $eventLoopBridge, new Infinite($loop, $eventLoopBridge, 1), $workerFactory, 1);
+        $pool = new Worker($parallelFactory, $workerFactory, 1);
 
         self::assertSame([
             Info::TOTAL => 0,
@@ -130,7 +130,7 @@ final class WorkerTest extends AsyncTestCase
     public function close(): void
     {
         $loop            = Factory::create();
-        $eventLoopBridge = new EventLoopBridge($loop);
+        $parallelFactory = new ParallelFactory($loop);
 
         $group         = Group::create();
         $workerFactory = new ThrowingReturnWorkerFactory();
@@ -139,7 +139,11 @@ final class WorkerTest extends AsyncTestCase
         $pool->releaseGroup($group)->shouldBeCalled();
         $pool->close()->shouldBeCalled();
 
-        $pool = new Worker($loop, $eventLoopBridge, $pool->reveal(), $workerFactory, 1);
+        $poolProperty = (new ReflectionClass($parallelFactory))->getProperty('infinitePool');
+        $poolProperty->setAccessible(true);
+        $poolProperty->setValue($parallelFactory, $pool->reveal());
+
+        $pool = new Worker($parallelFactory, $workerFactory, 1);
         $pool->close();
     }
 
@@ -149,7 +153,7 @@ final class WorkerTest extends AsyncTestCase
     public function kill(): void
     {
         $loop            = Factory::create();
-        $eventLoopBridge = new EventLoopBridge($loop);
+        $parallelFactory = new ParallelFactory($loop);
 
         $group         = Group::create();
         $workerFactory = new ThrowingReturnWorkerFactory();
@@ -158,7 +162,11 @@ final class WorkerTest extends AsyncTestCase
         $pool->releaseGroup($group)->shouldBeCalled();
         $pool->kill()->shouldBeCalled();
 
-        $pool = new Worker($loop, $eventLoopBridge, $pool->reveal(), $workerFactory, 1);
+        $poolProperty = (new ReflectionClass($parallelFactory))->getProperty('infinitePool');
+        $poolProperty->setAccessible(true);
+        $poolProperty->setValue($parallelFactory, $pool->reveal());
+
+        $pool = new Worker($parallelFactory, $workerFactory, 1);
         $pool->kill();
     }
 }

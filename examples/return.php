@@ -2,20 +2,18 @@
 
 use Money\Money;
 use React\EventLoop\Factory;
-use ReactParallel\EventLoop\EventLoopBridge;
-use ReactParallel\Pool\Infinite\Infinite;
-use ReactParallel\Pool\Worker\Work;
+use ReactParallel\Factory as ParallelFactory;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
+use ReactParallel\Pool\Worker\Workers\Work;
 use function React\Promise\all;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 $loop = Factory::create();
-$eventLoopBridge = new EventLoopBridge($loop);
-
+$parallelFactory = new ParallelFactory($loop);
 $workerFactory = new ReturnWorkerFactory();
 
-$pool = new \ReactParallel\Pool\Worker\Worker($loop, $eventLoopBridge, new Infinite($loop, $eventLoopBridge, 13), $workerFactory, 133);
+$pool = new \ReactParallel\Pool\Worker\Worker($parallelFactory, $workerFactory, 133);
 $promises = [];
 $i = 0;
 $func = function () use (&$promises, &$i, $pool, &$func, $loop) {
