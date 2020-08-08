@@ -18,7 +18,8 @@ final class ThrowingReturnTest extends AsyncTestCase
      */
     public function thrown(): void
     {
-        $money = null;
+        $money      = null;
+        $thrownWork = null;
         try {
             (new ThrowingReturnWorkerFactory())->construct()->perform(new Work(Money::EUR(512)));
         } catch (ThrownWork $thrownWork) {
@@ -27,6 +28,8 @@ final class ThrowingReturnTest extends AsyncTestCase
             throw $throwable;
         }
 
+        self::assertNotNull($thrownWork);
+        self::assertSame('Throwing work', $thrownWork->getMessage());
         self::assertNotNull($money);
         self::assertInstanceOf(Money::class, $money);
         self::assertSame('512', $money->getAmount());
