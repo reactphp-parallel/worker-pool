@@ -143,8 +143,16 @@ final class WorkerTest extends AsyncTestCase
         $poolProperty->setAccessible(true);
         $poolProperty->setValue($parallelFactory, $pool->reveal());
 
-        $pool = new Worker($parallelFactory, $workerFactory, 1);
-        $pool->close();
+        $workerPool = new Worker($parallelFactory, $workerFactory, 1);
+        $workerPool->close();
+
+        self::assertSame([
+            Info::TOTAL => 0,
+            Info::BUSY => 0,
+            Info::CALLS => 0,
+            Info::IDLE => 0,
+            Info::SIZE => 0,
+        ], iterator_to_array($workerPool->info()));
     }
 
     /**
@@ -166,7 +174,16 @@ final class WorkerTest extends AsyncTestCase
         $poolProperty->setAccessible(true);
         $poolProperty->setValue($parallelFactory, $pool->reveal());
 
-        $pool = new Worker($parallelFactory, $workerFactory, 1);
-        $pool->kill();
+        $workerPool = new Worker($parallelFactory, $workerFactory, 1);
+//        $workerPool->
+        $workerPool->kill();
+
+        self::assertSame([
+            Info::TOTAL => 0,
+            Info::BUSY => 0,
+            Info::CALLS => 0,
+            Info::IDLE => 0,
+            Info::SIZE => 0,
+        ], iterator_to_array($workerPool->info()));
     }
 }

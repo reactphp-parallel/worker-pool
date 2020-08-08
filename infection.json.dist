@@ -10,9 +10,42 @@
     },
     "mutators": {
         "@default": true,
+        "FunctionCallRemoval": {
+            "ignore": [
+                "ReactParallel\\Pool\\Worker\\Worker::perform::76"
+            ]
+        },
+        "GreaterThan": {
+            "ignore": [
+                "ReactParallel\\Pool\\Worker\\Thread::close::85"
+            ]
+        },
+        "GreaterThanNegotiation": {
+            "ignore": [
+                "ReactParallel\\Pool\\Worker\\Thread::close::85"
+            ]
+        },
+        "Identical": {
+            "ignore": [
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::43",
+                "ReactParallel\\Pool\\Worker\\Thread::close::85",
+                "ReactParallel\\Pool\\Worker\\Worker::getIdleThread::137"
+            ]
+        },
         "MethodCallRemoval": {
             "ignore": [
-                "ReactParallel\\Pool\\Infinite\\Infinite::startTtlTimer::189"
+                "ReactParallel\\Pool\\Worker\\Infinite::startTtlTimer::189",
+                "ReactParallel\\Pool\\Worker\\Thread::__construct::44",
+                "ReactParallel\\Pool\\Worker\\Thread::close::89",
+                "ReactParallel\\Pool\\Worker\\Worker::perform::87",
+                "ReactParallel\\Pool\\Worker\\Worker::kill::111",
+                "ReactParallel\\Pool\\Worker\\Worker::getIdleThread::138",
+                "ReactParallel\\Pool\\Worker\\Worker::startTtlTimer::164"
+            ]
+        },
+        "NotIdentical": {
+            "ignore": [
+                "ReactParallel\\Pool\\Worker\\Thread::close::85"
             ]
         }
     }
