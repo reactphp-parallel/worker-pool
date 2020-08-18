@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ReactParallel\Pool\Worker\Workers;
 
-use ReactParallel\Pool\Worker\Work as WorkContract;
+use ReactParallel\Pool\Worker\Work\Work;
 
-final class Work implements WorkContract
+final class WorkObject implements Work
 {
     private object $work;
 

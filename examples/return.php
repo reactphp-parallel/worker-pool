@@ -4,7 +4,7 @@ use Money\Money;
 use React\EventLoop\Factory;
 use ReactParallel\Factory as ParallelFactory;
 use ReactParallel\Pool\Worker\Workers\ReturnWorkerFactory;
-use ReactParallel\Pool\Worker\Workers\Work;
+use ReactParallel\Pool\Worker\Workers\WorkObject;
 use function React\Promise\all;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
@@ -19,7 +19,7 @@ $i = 0;
 $func = function () use (&$promises, &$i, $pool, &$func, $loop) {
     var_export(iterator_to_array($pool->info()));
     echo $i, PHP_EOL;
-    $promises[] = $pool->perform(new Work(Money::EUR($i)));
+    $promises[] = $pool->perform(new WorkObject(Money::EUR($i)));
     echo $i, PHP_EOL;
     if ($i === 512) {
         all($promises)->then(function (array $monies) use ($pool): void {

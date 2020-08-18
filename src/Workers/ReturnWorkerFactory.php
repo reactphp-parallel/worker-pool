@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace ReactParallel\Pool\Worker\Workers;
 
-use ReactParallel\Pool\Worker\Work\Worker as WorkerInterface;
 use ReactParallel\Pool\Worker\Work\WorkerFactory;
 
+/**
+ * @implements WorkerFactory<WorkObject, ReturnWorker>
+ */
 final class ReturnWorkerFactory implements WorkerFactory
 {
-    public function construct(): WorkerInterface
+    /**
+     * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress ImplementedReturnTypeMismatch
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress UndefinedDocblockClass
+     */
+    public function construct(): ReturnWorker
     {
         return new ReturnWorker();
     }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ReactParallel\Pool\Worker\Message;
 
-use ReactParallel\Pool\Worker\Message;
-use ReactParallel\Pool\Worker\Work as UnitOfWork;
+use ReactParallel\Pool\Worker\Work\Message;
+use ReactParallel\Pool\Worker\Work\Work as UnitOfWork;
 
 use function serialize;
 use function unserialize;

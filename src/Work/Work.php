@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ReactParallel\Pool\Worker;
+namespace ReactParallel\Pool\Worker\Work;
 
 interface Work
 {

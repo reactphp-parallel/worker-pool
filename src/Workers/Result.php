@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ReactParallel\Pool\Worker\Workers;
 
-use ReactParallel\Pool\Worker\Result as ResultContract;
+use ReactParallel\Pool\Worker\Work\Result as ResultContract;
 
 final class Result implements ResultContract
 {

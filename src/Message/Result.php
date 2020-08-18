@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ReactParallel\Pool\Worker\Message;
 
-use ReactParallel\Pool\Worker\Result as UnitOfResult;
+use ReactParallel\Pool\Worker\Work\Result as UnitOfResult;
 
 use function serialize;
 use function unserialize;
