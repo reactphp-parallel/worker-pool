@@ -1,8 +1,10 @@
 # Worker Pool
 
-[![Build Status](https://travis-ci.com/reactphp-parallel/worker-pool.png)](https://travis-ci.com/reactphp-parallel/worker-pool)
+![Continuous Integration](https://github.com/reactphp-parallel/worker-pool/workflows/Continuous%20Integration/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/react-parallel/worker-pool/v/stable.png)](https://packagist.org/packages/react-parallel/worker-pool)
 [![Total Downloads](https://poser.pugx.org/react-parallel/worker-pool/downloads.png)](https://packagist.org/packages/react-parallel/worker-pool)
+[![Code Coverage](https://scrutinizer-ci.com/g/reactphp-parallel/worker-pool/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/reactphp-parallel/worker-pool/?branch=master)
+[![Type Coverage](https://shepherd.dev/github/reactphp-parallel/worker-pool/coverage.svg)](https://shepherd.dev/github/reactphp-parallel/worker-pool)
 [![License](https://poser.pugx.org/react-parallel/worker-pool/license.png)](https://packagist.org/packages/react-parallel/worker-pool)
 
 Create pool with only one specific designated task
