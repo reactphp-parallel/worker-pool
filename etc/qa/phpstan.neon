@@ -1,0 +1,10 @@
+parameters:
+	ergebnis:
+		noExtends:
+			classesAllowedToBeExtended:
+				- Exception
+	stubFiles:
+		- ../../stubs/Channel.stub
+
+includes:
+	- ../../vendor/wyrihaximus/async-test-utilities/rules.neon

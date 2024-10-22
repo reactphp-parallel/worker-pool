@@ -6,5 +6,5 @@ namespace ReactParallel\Pool\Worker\Work;
 
 interface Message
 {
-    public function id(): string;
+    public function id(): int;
 }

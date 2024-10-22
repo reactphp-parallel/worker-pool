@@ -6,7 +6,6 @@ namespace ReactParallel\Pool\Worker;
 
 use parallel\Channel;
 use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
 use ReactParallel\Contracts\PoolInterface;
 use ReactParallel\EventLoop\EventLoopBridge;
 use ReactParallel\Pool\Worker\Message\NegativeOutcome;
@@ -14,30 +13,36 @@ use ReactParallel\Pool\Worker\Message\Outcome;
 use ReactParallel\Pool\Worker\Message\PositiveOutcome;
 use ReactParallel\Pool\Worker\Message\Work as WorkMessage;
 use ReactParallel\Pool\Worker\Thread\Performer;
+use ReactParallel\Pool\Worker\Work\Message;
+use ReactParallel\Pool\Worker\Work\Result;
 use ReactParallel\Pool\Worker\Work\Work;
 use ReactParallel\Pool\Worker\Work\WorkerFactory;
 
 use function count;
-use function spl_object_hash;
+use function React\Async\await;
+use function spl_object_id;
 
 use const WyriHaximus\Constants\Boolean\FALSE_;
 use const WyriHaximus\Constants\Boolean\TRUE_;
 use const WyriHaximus\Constants\Numeric\ZERO;
 
+/**
+ * @template I
+ * @template O
+ */
 final class Thread
 {
-    private Channel $in;
-    private Channel $out;
-    /** @var array<string, Deferred> */
+    /** @var array<int, Deferred<Outcome>> */
     private array $deferreds = [];
     private bool $closed     = FALSE_;
 
-    private function __construct(Channel $in, Channel $out, EventLoopBridge $eventLoopBridge)
+    /**
+     * @param Channel<WorkMessage<I>> $in
+     * @param Channel<Result<O>       &Message> $out
+     */
+    private function __construct(private Channel $in, private Channel $out, EventLoopBridge $eventLoopBridge)
     {
-        $this->in  = $in;
-        $this->out = $out;
-
-        $eventLoopBridge->observe($out)->subscribe(function (Outcome $message): void {
+        foreach ($eventLoopBridge->observe($out) as $message) {
             $deferred = $this->deferreds[$message->id()];
             unset($this->deferreds[$message->id()]);
 
@@ -56,9 +61,14 @@ final class Thread
 
                 return;
             }
-        });
+        }
     }
 
+    /**
+     * @param WorkerFactory<I> $workerFactory
+     *
+     * @return Thread<O>
+     */
     public static function create(WorkerFactory $workerFactory, EventLoopBridge $eventLoopBridge, PoolInterface $pool): self
     {
         $in  = new Channel(Channel::Infinite);
@@ -70,13 +80,13 @@ final class Thread
         return new self($in, $out, $eventLoopBridge);
     }
 
-    public function perform(Work $work): PromiseInterface
+    public function perform(Work $work): Result
     {
-        $id                   = spl_object_hash($work);
+        $id                   = spl_object_id($work);
         $this->deferreds[$id] = new Deferred();
         $this->in->send(new WorkMessage($id, $work));
 
-        return $this->deferreds[$id]->promise();
+        return await($this->deferreds[$id]->promise());
     }
 
     public function close(): void

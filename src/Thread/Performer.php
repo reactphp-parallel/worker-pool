@@ -28,11 +28,11 @@ final class Performer
                     try {
                         /** @psalm-suppress UndefinedDocblockClass */
                         $out->send(new ResultMessage($work->id(), $worker->perform($work->work())));
-                    } catch (Throwable $throwable) {
+                    } catch (Throwable $throwable) { /** @phpstan-ignore-line The $out->send is this situations version of propagating the exception */
                         $out->send(new ErrorMessage($work->id(), new Error($throwable)));
                     }
                 }
-            } catch (Closed $closed) {
+            } catch (Closed) {
                 // @ignoreException
             }
         };

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ReactParallel\Tests\Pool\Worker;
 
 use Money\Money;
-use React\EventLoop\Factory;
+use React\EventLoop\Loop;
 use ReactParallel\Contracts\LowLevelPoolInterface;
 use ReactParallel\Factory as ParallelFactory;
 use ReactParallel\Pool\Infinite\Group;
@@ -15,22 +15,15 @@ use ReactParallel\Pool\Worker\Workers\ThrowingReturnWorkerFactory;
 use ReactParallel\Pool\Worker\Workers\ThrownWork;
 use ReactParallel\Pool\Worker\Workers\WorkObject;
 use ReflectionClass;
-use Throwable;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\PoolInfo\Info;
 
-use function assert;
-use function iterator_to_array;
-
 final class WorkerTest extends AsyncTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function return(): void
     {
-        $loop            = Factory::create();
-        $parallelFactory = new ParallelFactory($loop);
+        $parallelFactory = new ParallelFactory();
 
         $workerFactory = new ReturnWorkerFactory();
 
@@ -42,22 +35,23 @@ final class WorkerTest extends AsyncTestCase
             Info::CALLS => 0,
             Info::IDLE => 0,
             Info::SIZE => 0,
-        ], iterator_to_array($pool->info()));
+        ], [...$pool->info()]);
 
-        $loop->futureTick(static function () use ($pool): void {
+        Loop::futureTick(static function () use ($pool): void {
             self::assertSame([
                 Info::TOTAL => 1,
                 Info::BUSY => 1,
                 Info::CALLS => 0,
                 Info::IDLE => 0,
                 Info::SIZE => 1,
-            ], iterator_to_array($pool->info()));
+            ], [...$pool->info()]);
         });
 
-        $money = $this->await($pool->perform(new WorkObject(Money::EUR(512)))->always(static function () use ($pool): void {
+        try {
+            $money = $pool->perform(new WorkObject(Money::EUR(512)));
+        } finally {
             $pool->close();
-        }), $loop);
-        assert($money instanceof Money);
+        }
 
         self::assertSame('512', $money->getAmount());
 
@@ -67,16 +61,13 @@ final class WorkerTest extends AsyncTestCase
             Info::CALLS => 0,
             Info::IDLE => 0,
             Info::SIZE => 0,
-        ], iterator_to_array($pool->info()));
+        ], [...$pool->info()]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function thrown(): void
     {
-        $loop            = Factory::create();
-        $parallelFactory = new ParallelFactory($loop);
+        $parallelFactory = new ParallelFactory();
 
         $workerFactory = new ThrowingReturnWorkerFactory();
 
@@ -88,27 +79,25 @@ final class WorkerTest extends AsyncTestCase
             Info::CALLS => 0,
             Info::IDLE => 0,
             Info::SIZE => 0,
-        ], iterator_to_array($pool->info()));
+        ], [...$pool->info()]);
 
-        $loop->futureTick(static function () use ($pool): void {
+        Loop::futureTick(static function () use ($pool): void {
             self::assertSame([
                 Info::TOTAL => 1,
                 Info::BUSY => 1,
                 Info::CALLS => 0,
                 Info::IDLE => 0,
                 Info::SIZE => 1,
-            ], iterator_to_array($pool->info()));
+            ], [...$pool->info()]);
         });
 
         $money = null;
         try {
-            $this->await($pool->perform(new WorkObject(Money::EUR(512)))->always(static function () use ($pool): void {
-                $pool->close();
-            }), $loop);
+            $pool->perform(new WorkObject(Money::EUR(512)));
         } catch (ThrownWork $thrownWork) {
             $money = $thrownWork->work();
-        } catch (Throwable $throwable) {
-            throw $throwable;
+        } finally {
+            $pool->close();
         }
 
         self::assertNotNull($money);
@@ -121,16 +110,13 @@ final class WorkerTest extends AsyncTestCase
             Info::CALLS => 0,
             Info::IDLE => 0,
             Info::SIZE => 0,
-        ], iterator_to_array($pool->info()));
+        ], [...$pool->info()]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function close(): void
     {
-        $loop            = Factory::create();
-        $parallelFactory = new ParallelFactory($loop);
+        $parallelFactory = new ParallelFactory();
 
         $group         = Group::create();
         $workerFactory = new ThrowingReturnWorkerFactory();
@@ -152,16 +138,13 @@ final class WorkerTest extends AsyncTestCase
             Info::CALLS => 0,
             Info::IDLE => 0,
             Info::SIZE => 0,
-        ], iterator_to_array($workerPool->info()));
+        ], [...$workerPool->info()]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function kill(): void
     {
-        $loop            = Factory::create();
-        $parallelFactory = new ParallelFactory($loop);
+        $parallelFactory = new ParallelFactory();
 
         $group         = Group::create();
         $workerFactory = new ThrowingReturnWorkerFactory();
@@ -175,7 +158,6 @@ final class WorkerTest extends AsyncTestCase
         $poolProperty->setValue($parallelFactory, $pool->reveal());
 
         $workerPool = new Worker($parallelFactory, $workerFactory, 1);
-//        $workerPool->
         $workerPool->kill();
 
         self::assertSame([
@@ -184,6 +166,6 @@ final class WorkerTest extends AsyncTestCase
             Info::CALLS => 0,
             Info::IDLE => 0,
             Info::SIZE => 0,
-        ], iterator_to_array($workerPool->info()));
+        ], [...$workerPool->info()]);
     }
 }

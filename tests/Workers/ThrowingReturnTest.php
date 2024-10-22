@@ -13,9 +13,7 @@ use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
 final class ThrowingReturnTest extends AsyncTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function thrown(): void
     {
         $money      = null;

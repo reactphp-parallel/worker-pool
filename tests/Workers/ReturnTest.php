@@ -11,9 +11,7 @@ use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
 final class ReturnTest extends AsyncTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function return(): void
     {
         $money = (new ReturnWorkerFactory())->construct()->perform(new WorkObject(Money::EUR(512)))->result();

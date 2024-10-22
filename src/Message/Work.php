@@ -7,27 +7,29 @@ namespace ReactParallel\Pool\Worker\Message;
 use ReactParallel\Pool\Worker\Work\Message;
 use ReactParallel\Pool\Worker\Work\Work as UnitOfWork;
 
+use function assert;
 use function serialize;
 use function unserialize;
 
 final class Work implements Message
 {
-    private string $id;
     private string $work;
 
-    public function __construct(string $id, UnitOfWork $work)
+    public function __construct(private int $id, UnitOfWork $work)
     {
-        $this->id   = $id;
         $this->work = serialize($work);
     }
 
-    public function id(): string
+    public function id(): int
     {
         return $this->id;
     }
 
     public function work(): UnitOfWork
     {
-        return unserialize($this->work);
+        $work = unserialize($this->work);
+        assert($work instanceof UnitOfWork);
+
+        return $work;
     }
 }

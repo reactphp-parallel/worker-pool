@@ -15,13 +15,11 @@ use ReactParallel\Pool\Worker\Workers\WorkObject;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 
 use function dirname;
-use function Safe\sleep;
+use function sleep;
 
 final class PerformerTest extends AsyncTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function return(): void
     {
         $runtime       = new Runtime(dirname(dirname(__DIR__)) . '/vendor/autoload.php');
@@ -30,9 +28,9 @@ final class PerformerTest extends AsyncTestCase
         $out           = new Channel(Channel::Infinite);
 
         $runtime->run(static function (Channel $in): void {
-            sleep(1);
-            $in->send(new WorkMessage('abc', new WorkObject(Money::EUR(512))));
-            sleep(1);
+            sleep(1); /** @phpstan-ignore-line Inside a thread there */
+            $in->send(new WorkMessage(256, new WorkObject(Money::EUR(512))));
+            sleep(1); /** @phpstan-ignore-line Inside a thread there */
             $in->close();
         }, [$in]);
 
@@ -44,9 +42,7 @@ final class PerformerTest extends AsyncTestCase
         self::assertSame('512', $money->getAmount());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function throw(): void
     {
         $runtime       = new Runtime(dirname(dirname(__DIR__)) . '/vendor/autoload.php');
@@ -55,9 +51,9 @@ final class PerformerTest extends AsyncTestCase
         $out           = new Channel(Channel::Infinite);
 
         $runtime->run(static function (Channel $in): void {
-            sleep(1);
-            $in->send(new WorkMessage('abc', new WorkObject(Money::EUR(512))));
-            sleep(1);
+            sleep(1); /** @phpstan-ignore-line Inside a thread there */
+            $in->send(new WorkMessage(256, new WorkObject(Money::EUR(512))));
+            sleep(1); /** @phpstan-ignore-line Inside a thread there */
             $in->close();
         }, [$in]);
 

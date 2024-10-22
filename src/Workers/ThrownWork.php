@@ -16,6 +16,7 @@ final class ThrownWork extends Exception implements AdditionalPropertiesInterfac
     public function __construct(Work $work)
     {
         parent::__construct('Throwing work');
+
         $this->work = $work->work();
     }
 
@@ -24,9 +25,7 @@ final class ThrownWork extends Exception implements AdditionalPropertiesInterfac
         return $this->work;
     }
 
-    /**
-     * @return array<string>
-     */
+    /** @return array<string> */
     public function additionalProperties(): array
     {
         return ['work'];

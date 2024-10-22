@@ -6,9 +6,7 @@ namespace ReactParallel\Pool\Worker\Workers;
 
 use ReactParallel\Pool\Worker\Work\WorkerFactory;
 
-/**
- * @implements WorkerFactory<WorkObject, ReturnWorker>
- */
+/** @implements WorkerFactory<WorkObject, ReturnWorker> */
 final class ReturnWorkerFactory implements WorkerFactory
 {
     /**

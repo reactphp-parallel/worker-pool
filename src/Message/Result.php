@@ -6,27 +6,35 @@ namespace ReactParallel\Pool\Worker\Message;
 
 use ReactParallel\Pool\Worker\Work\Result as UnitOfResult;
 
+use function assert;
 use function serialize;
 use function unserialize;
 
+/**
+ * @template T
+ * @template-implements PositiveOutcome<T>
+ */
 final class Result implements PositiveOutcome
 {
-    private string $id;
     private string $result;
 
-    public function __construct(string $id, UnitOfResult $result)
+    /** @param UnitOfResult<T> $result */
+    public function __construct(private int $id, UnitOfResult $result)
     {
-        $this->id     = $id;
         $this->result = serialize($result);
     }
 
-    public function id(): string
+    public function id(): int
     {
         return $this->id;
     }
 
+    /** @return UnitOfResult<T> */
     public function result(): UnitOfResult
     {
-        return unserialize($this->result);
+        $result = unserialize($this->result);
+        assert($result instanceof UnitOfResult);
+
+        return $result;
     }
 }

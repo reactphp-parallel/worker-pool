@@ -7,9 +7,7 @@ namespace ReactParallel\Pool\Worker\Workers;
 use ReactParallel\Pool\Worker\Work\Work;
 use ReactParallel\Pool\Worker\Work\Worker;
 
-/**
- * @implements Worker<WorkObject>
- */
+/** @implements Worker<WorkObject> */
 final class ThrowingReturnWorker implements Worker
 {
     public function perform(Work $work): Result

@@ -6,27 +6,29 @@ namespace ReactParallel\Pool\Worker\Message;
 
 use ReactParallel\Pool\Worker\Error as UnitOfError;
 
+use function assert;
 use function serialize;
 use function unserialize;
 
 final class Error implements NegativeOutcome
 {
-    private string $id;
     private string $error;
 
-    public function __construct(string $id, UnitOfError $error)
+    public function __construct(private int $id, UnitOfError $error)
     {
-        $this->id    = $id;
         $this->error = serialize($error);
     }
 
-    public function id(): string
+    public function id(): int
     {
         return $this->id;
     }
 
     public function error(): UnitOfError
     {
-        return unserialize($this->error);
+        $error = unserialize($this->error);
+        assert($error instanceof UnitOfError);
+
+        return $error;
     }
 }

@@ -20,6 +20,8 @@ composer require react-parallel/worker-pool
 ```php
 <?php
 
+declare(strict_types=1);
+
 use Money\Money;
 use React\EventLoop\Factory;
 use ReactParallel\Factory as ParallelFactory;
@@ -33,13 +35,14 @@ $parallelFactory = new ParallelFactory($loop);
 $workerFactory = new ReturnWorkerFactory();
 
 $pool = new \ReactParallel\Pool\Worker\Worker($parallelFactory, $workerFactory, 133);
-$pool->perform(new WorkObject(Money::EUR(512)))->always(function () use ($pool) {
-    $pool->close();
-})->done(function (Money $money) {
-    echo $money->getAmount();
-});
 
-$loop->run();
+try {
+    $money = $pool->perform(new WorkObject(Money::EUR(512)));
+    echo $money->getAmount();
+} finally {
+    $pool->close();
+}
+
 ```
 
 ## Creating your own worker ##
@@ -99,7 +102,7 @@ autoloader active so you can create any object like you normally would.
 
 ## License ##
 
-Copyright 2020 [Cees-Jan Kiewiet](http://wyrihaximus.net/)
+Copyright 2024 [Cees-Jan Kiewiet](http://wyrihaximus.net/)
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

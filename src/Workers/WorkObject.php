@@ -8,11 +8,8 @@ use ReactParallel\Pool\Worker\Work\Work;
 
 final class WorkObject implements Work
 {
-    private object $work;
-
-    public function __construct(object $work)
+    public function __construct(private object $work)
     {
-        $this->work = $work;
     }
 
     public function work(): object
